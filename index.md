@@ -9,6 +9,3 @@ Particularités du système Unix, système de fichiers, commandes de base, expre
     - Julien Seiler (@julozi)
     - Christophe Caron (@chcaron)
     - Gildas Le Corguillé (@lecorguille)
-
-### Support or Contact
-Having trouble with Pages? Check out our [documentation](https://help.github.com/pages) or [contact support](https://github.com/contact) and we’ll help you sort it out.
