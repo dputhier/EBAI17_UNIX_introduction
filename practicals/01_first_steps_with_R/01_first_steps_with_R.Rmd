@@ -1,0 +1,453 @@
+---
+title: "First steps with R"
+author: "Jacques van Helden"
+date: '`r Sys.Date()`'
+output:
+  pdf_document:
+    fig_caption: yes
+    highlight: zenburn
+    toc: yes
+    toc_depth: 3
+  html_document:
+    fig_caption: yes
+    highlight: zenburn
+    theme: cerulean
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  word_document: default
+---
+
+
+## Scope
+
+In this session we will explore basic manipulations of variables.
+
+- Assigning a value to a variable
+- Basic operations on numbers
+
+## ***R*** is a calculator
+
+**Convention:**
+
+- Dark boxes: commands to type in RStudio **Console** (bottom-left panel).
+- White boxes: the result you should obtain.
+
+**Example:** compute a simple addition.  
+
+```{r}
+2 + 5
+```
+## Assign a value to a variable
+
+In ***R*** **`<-`** means "create a variable and assign its value."
+
+**Example:** 
+
+- create a variable named $a$, 
+- assign the value $2$ to this variable, 
+- ***print*** the result. 
+
+```{r}
+a <- 2
+print(a)
+```
+
+## Computing with variables
+
+**Example:** 
+
+- create a variable named $b$ having value $5$, 
+- compute  $a + b$ and store the result in a variable named $c$,
+- ***print*** the result. 
+
+```{r}
+b <- 5
+c <- a + b
+print(c)
+```
+
+## Variables need to be updated
+
+**Example:** 
+
+- change the value of $a$ to $3$, 
+- print  the value of $c$
+- Is this the correct result for $c = a + b$? Why?
+
+```{r}
+a <- 3 ## Change the value of a
+print(c) ## Print the value of c
+
+## Check whether c equals a + b
+c == a + b
+```
+
+Note: **`==`** is used to test whether two variables have the same content. 
+
+## Updating variable contents
+
+**Example:** 
+
+- change the value of $a$ to $27$, 
+- recompute and print  the value of $c$
+
+```{r}
+a <- 27 ## Change the value of a
+c <- a + b
+print(c) ## Print the value of c
+
+## Check whether c  equals a + b
+c == a + b
+```
+
+## Vectors of values
+
+The simplest data structure in ***R*** is a vector.
+In the previous example, the variable ***a*** was actually a vector with a single value.
+
+**Example:** create a variable named  ***three.numbers***, and initialize it with a vector with values ***27***, ***12*** and ***3000***.
+
+**Tips:**
+- variable names can comprize several parts, separated by dots.
+- the function ***`c()`*** combines several values into a vector
+
+```{r}
+three.numbers <- c(27,12,3000)
+print(three.numbers)
+```
+
+
+## Series
+
+The simple way to create a series of numbers.
+The column operator permits to generate all integer values between two limits.
+
+```{r}
+x <- 0:14
+print(x)
+```
+
+## Computing with vectors
+
+
+**R** handles vectors in a very convenient way. 
+An operation on a vector applies to all its elements.
+
+```{r}
+x <- 1:10 # Define a series from 1 to 10
+print(x)
+y <- x^2 # Compute the square of each number
+print(y)
+```
+
+
+## Scatter plot
+
+
+```{r}
+x <- -10:10
+y <- x^2
+plot(x,y)
+```
+
+## Line plot
+
+
+```{r}
+x <- -10:10
+y <- x^2
+plot(x,y, type="l")
+```
+
+## Variables can also contain strings
+
+```{r}
+# The # symbol allows to insert comments in R code
+
+# Define  a vector named "whoami", and 
+# containing two names
+whoami <- c("Denis", "Siméon")
+print(whoami) # Comment at the end of a line
+```
+
+## String concatenation
+
+```{r}
+# Define  a vector named "names", and 
+# containing two names
+whoami <- c("Denis", "Siméon")
+
+# Paste the values of a vector of string 
+print(paste(sep=" ", whoami[1], whoami[2]))
+```
+
+
+## Carl's preferred distribution
+
+The function **`dpois()`** computes the Poisson **density**, i.e. the probability to observe **exactly** $x$ successes in a series of independent trials with equal probability.
+
+The Poisson distribution is defined by a single parameter: the expected number of successes $\lambda$ (read "lambda").
+
+$$P(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}$$
+
+```{r eval=FALSE}
+x <- 0:14   # Define the X values from 0 to 14
+y <- dpois(x, lambda = 2.5) # Poisson density
+print(y) # Check the result
+```
+
+## Plotting the Poisson distribution
+
+
+```{r eval=TRUE}
+x <- 0:14   # Define the X values from 0 to 14
+y <- dpois(x, lambda = 2.5) # Poisson density
+plot(x,y) # Check the result
+```
+
+This first plot is not very nice. Let us get some help to improve it.
+
+## Getting help for ***R*** functions
+
+
+Need help? Type **`help()`**. 
+
+```{r}
+help(plot)
+```
+
+A question? Type `?`
+
+```{r}
+?plot
+```
+
+**Result:** ***R*** displays the help message for the function `dpois()`.
+
+## Exercise: improve Poisson density plot
+
+
+1. Do not (yet) look the next slide.
+2. Read the help page for the `dpois()`function.
+3. draw a plot that provides a didactic illustration of the  Poisson density.
+
+## Improve the plot: type = histogram
+
+
+```{r}
+x <- 0:14
+lambda <- 2.54
+y <- dpois(x, lambda)
+plot(x,y, type="h")
+```
+
+## Improve the plot: Add a title
+
+
+```{r}
+plot(x,y, type="h", lwd=5, col="blue",
+     main="Poisson density")
+```
+
+## Improve the plot: define axis labels
+
+
+```{r}
+plot(x,y, type="h", lwd=5, col="blue",
+     main="Poisson density",
+     xlab="x = number of successes",
+     ylab="P(X=x)")
+```
+
+## Improve the plot: add a legend
+
+
+```{r}
+plot(x,y, type="h", lwd=5, col="blue",
+     main="Poisson density",
+     xlab="x = number of successes",
+     ylab="P(X=x)")
+legend("topright", paste("lambda =", lambda))
+```
+
+
+## Poisson: a family of curves
+
+
+**Exercice:** explore the properties of the Poisson density function, by changing the rang of $x$ values, and the $\lambda$ parameter.
+
+
+
+## Solution: a family of Poisson curves
+
+$lambda=0.01$
+
+```{r}
+lambda <- 0.01
+x <- 0:20
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=0.1$
+
+```{r}
+lambda <- 0.1
+x <- 0:20
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=1$
+
+```{r}
+lambda <- 1
+x <- 0:20
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=2$
+
+```{r}
+lambda <- 2
+x <- 0:20
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=5$
+
+```{r}
+lambda <- 5
+x <- 0:20
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=5$
+
+```{r}
+lambda <- 5
+x <- 0:40
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=10$
+
+```{r}
+lambda <- 10
+x <- 0:(4*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=5, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=20$
+
+```{r}
+lambda <- 20
+x <- 0:(4*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=2, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=30$
+
+```{r}
+lambda <- 30
+x <- 0:(2*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=2, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=50$
+
+```{r}
+lambda <- 50
+x <- 0:(2*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=2, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=100$
+
+```{r}
+lambda <- 100
+x <- 0:(2*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=2, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+## Solution: a family of Poisson curves
+
+$lambda=1000$
+
+```{r}
+lambda <- 1000
+x <- 0:(2*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=2, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=10000$
+
+```{r}
+lambda <- 10000
+x <- 0:(2*lambda)
+plot(x, dpois(x,lambda=lambda), type="h",   
+     col="darkblue", lwd=2, xlab="X",ylab="dpois(x)")
+legend("topright", paste("lambda=",lambda))
+```
+
+## Solution: a family of Poisson curves
+
+$lambda=100000$
+
+```{r}
+plot(95000:105000, dpois(95000:105000,lambda=100000), type="h", col="darkblue", xlab="X",ylab="dpois(x)")
+```
+
+## Before finishing -- keep track of your session
+
+Tractability is an important issue in sciences. 
+The ***R*** function `sessionInfo()` summarizes information about the versions of R, the operating system, and all the libraries used during a session. 
+
+```{r}
+sessionInfo()
+```
+
